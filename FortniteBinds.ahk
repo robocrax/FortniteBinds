@@ -276,5 +276,75 @@ return
 
 
 
+; Attempt to make turbo keys more flexible
+
+F6::
+Input, ToggleKeyForTurbo, L1 T5   ; get a key press, timeout 5 seconds and cancel registration
+If (ErrorLevel = Timeout) {
+    return
+}
+
+WhichKey := HasVal(["WheelUp", "WheelDown", "3", "c", "2"], ToggleKeyForTurbo)
+
+if (WhichKey == 0) {
+    return
+} else {
+    HasVal%WhichKey% := !HasVal%WhichKey%
+}
+
+; IDK what I'm doing here... we skip over
+; TurboVarName := false
+; TurboVarName := Turbo_%ToggleKeyForTurbo%
+
+; lib: https://www.autohotkey.com/boards/viewtopic.php?p=109173#p109173
+HasVal(haystack, needle) {
+	if !(IsObject(haystack)) || (haystack.Length() = 0)
+		return 0
+	for index, value in haystack
+		if (value = needle)
+			return index
+	return 0
+}
 
 
+; The Weapon Numbers I'm already tracking from the macro above
+
+#If HasVal1
+~LButton::
+While (GetKeyState("LButton", "P") && (WeaponNumber == 0)) {
+    Send, LButton
+    sleep 50
+}
+#if
+
+#If HasVal2
+~LButton::
+While (GetKeyState("LButton", "P") && (WeaponNumber == 1)) {
+    Send, LButton
+    sleep 50
+}
+#if
+
+#If HasVal3
+~LButton::
+While (GetKeyState("LButton", "P") && (WeaponNumber == 2)) {
+    Send, LButton
+    sleep 50
+}
+#if
+
+#If HasVal4
+~LButton::
+While (GetKeyState("LButton", "P") && (WeaponNumber == 3)) {
+    Send, LButton
+    sleep 50
+}
+#if
+
+#If HasVal5
+~LButton::
+While (GetKeyState("LButton", "P") && (WeaponNumber == 4)) {
+    Send, LButton
+    sleep 50
+}
+#if
