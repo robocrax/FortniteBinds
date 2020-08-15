@@ -186,26 +186,42 @@ return
 ; Ryuzanami instant reload test 1
 ;first get vars
 ~WheelUp::
-WeaponNumber := 0
+WeaponNumber := 1
+If (HasVal1) {
+    MakeTurboClick := true
+}
 return
 ~WheelDown::
-WeaponNumber := 1
+WeaponNumber := 2
+If (HasVal2) {
+    MakeTurboClick := true
+}
 return
 ~3::
-WeaponNumber := 2
+WeaponNumber := 3
+If (HasVal3) {
+    MakeTurboClick := true
+}
 return
 ~c::
-WeaponNumber := 3
+WeaponNumber := 4
+If (HasVal4) {
+    MakeTurboClick := true
+}
 return
 ~2::
-WeaponNumber := 4
+WeaponNumber := 5
+If (HasVal5) {
+    MakeTurboClick := true
+}
 return
 
 4::
 Send, i
 sleep 30
 ; Loop WeaponNumber times
-Loop %WeaponNumber%                            ;The number is the amount of times the code is looped
+LoopTimes := %WeaponNumber%-1
+Loop %LoopTimes%                            ;The number is the amount of times the code is looped
 { 
     Send, {Right}
     sleep 30
@@ -276,15 +292,11 @@ return
 
 
 
-; Attempt to make turbo keys more flexible
+; Attempt to make turbo keys more flexible   [toggle mode not force mode]
 
 F6::
-Input, ToggleKeyForTurbo, L1 T5   ; get a key press, timeout 5 seconds and cancel registration
-If (ErrorLevel = Timeout) {
-    return
-}
-
-WhichKey := HasVal(["WheelUp", "WheelDown", "3", "c", "2"], ToggleKeyForTurbo)
+Input, ToggleKeyForTurbo, L1 T5 M  ; get a key press, timeout 5 seconds and cancel registration 
+WhichKey := HasVal([",", ".", "3", "c", "2"], ToggleKeyForTurbo)    ; minus one to make it same as WeaponNumber
 
 if (WhichKey == 0) {
     return
@@ -292,9 +304,7 @@ if (WhichKey == 0) {
     HasVal%WhichKey% := !HasVal%WhichKey%
 }
 
-; IDK what I'm doing here... we skip over
-; TurboVarName := false
-; TurboVarName := Turbo_%ToggleKeyForTurbo%
+return
 
 ; lib: https://www.autohotkey.com/boards/viewtopic.php?p=109173#p109173
 HasVal(haystack, needle) {
@@ -309,42 +319,11 @@ HasVal(haystack, needle) {
 
 ; The Weapon Numbers I'm already tracking from the macro above
 
-#If HasVal1
+#If MakeTurboClick
 ~LButton::
-While (GetKeyState("LButton", "P") && (WeaponNumber == 0)) {
-    Send, LButton
-    sleep 50
+While (GetKeyState("LButton", "P")) {
+    Send, {LButton}
+    sleep 45
 }
-#if
-
-#If HasVal2
-~LButton::
-While (GetKeyState("LButton", "P") && (WeaponNumber == 1)) {
-    Send, LButton
-    sleep 50
-}
-#if
-
-#If HasVal3
-~LButton::
-While (GetKeyState("LButton", "P") && (WeaponNumber == 2)) {
-    Send, LButton
-    sleep 50
-}
-#if
-
-#If HasVal4
-~LButton::
-While (GetKeyState("LButton", "P") && (WeaponNumber == 3)) {
-    Send, LButton
-    sleep 50
-}
-#if
-
-#If HasVal5
-~LButton::
-While (GetKeyState("LButton", "P") && (WeaponNumber == 4)) {
-    Send, LButton
-    sleep 50
-}
+MakeTurboClick := false
 #if
