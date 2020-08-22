@@ -146,6 +146,16 @@ ClickIsOn := false
 If (!GetKeyState("LButton", "P")) {
     SendEvent, {LButton up}
 }
+
+; added later: switch to previous build piece as i was expecting that
+if (WeaponNumber Between 6 and 8) {
+    switch WeaponNumber
+    {
+        Case 6: Send, q
+        Case 7: Send, e
+        Case 8: Send, {LShift}
+    }
+}
 return
 
 
@@ -216,6 +226,53 @@ If (HasVal5) {
 }
 return
 
+
+
+
+; now considering building as WeaponNumber to make it easier for me
+
+; q WALL 6
+; e STARIS 7
+; LShift FLOOR 8
+
+
+~q::
+WeaponNumber := 6
+return
+
+~e::
+WeaponNumber := 7
+return
+
+~LShift::
+WeaponNumber := 8
+return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; ryuzanami quick split weapons
+
 4::
 Send, i
 sleep 30
@@ -244,35 +301,6 @@ return
 
 
 
-
-
-
-
-; Quick split mats (CANCELED: affects quick reload for weapons... pointer moves position after this)
-; /::
-; Send, i
-; sleep 30
-; Send, {Up}
-; sleep 30
-; Loop 3                            ;assuming first 3 ammos are shared.. not more
-; { 
-;     Send, {Right}
-;     sleep 20
-;     Send, z
-;     sleep 30
-; }
-; Send, {Up}
-; sleep 30
-; Loop 3                            ;assuming first 3 ammos are shared.. not more
-; { 
-;     Send, {Right}
-;     sleep 20
-;     Send, z
-;     sleep 30
-; }
-; sleep 20
-; Send, i
-; return
 
 
 
