@@ -1,10 +1,7 @@
-﻿SetTitleMatchMode, 1
+﻿#NoEnv
+SetTitleMatchMode, 1
 #IfWinActive Fortnite
 #SingleInstance Force
-
-
-
-
 
 
 ; 60deg instead of 30deg full sprint towards direction
@@ -12,19 +9,43 @@
 ~d::Right
 
 
-
 ; reset every edit when pressing edit
 ~f::
 sleep 22
 Send {'}
+sleep 100 ; considering this the difference between tap and hold (200ms used globally but I'm fast boii)
+; FIXME: When editing fast, if the sceond instance key is pressed right after this delay then it'll perform the macro even if you dont want to
+If (GetKeyState("f", "P")) {
+    SetKeyDelay, 20
+    Send, {RButton}f{'}{RButton}
+}
+return
+
+
+; don't toggle autorun but infact auto RUN!
+`::
+Send {w down}
+sleep 100
+Send {w up}{MButton}
 return
 
 
 
+
+
+
+
+
+
+
+
+
+; AFK macros
+
 ; turbo edit
 F1::
 {
-   SerpentMode := !SerpentMode
+   SerpentMode := true
    While, SerpentMode
     {
         Send g
@@ -38,7 +59,7 @@ return
 ; auto pick glitch orangeguy
 F2::
 {
-   PickUpMode := !PickUpMode
+   PickUpMode := true
 
    While, PickUpMode
     {
@@ -51,7 +72,7 @@ return
 ; continous repeat last emote spam
 F3::
 {
-   EmoteMode := !EmoteMode
+   EmoteMode := true
 
    While, EmoteMode
     {
@@ -87,12 +108,9 @@ return
 
 
 
-; don't toggle autorun but infact auto RUN!
-`::
-Send {w down}
-sleep 100
-Send {w up}{MButton}
-return
+
+
+
 
 
 
@@ -136,6 +154,16 @@ return
 
 
 
+
+
+
+
+
+
+
+
+
+; new cone function
 
 XButton2::
 Send, =
@@ -184,16 +212,18 @@ return
 
 
 
-~z::
-DllCall("mouse_event", "UInt", 0x01, "UInt", 3000, "UInt", 0) 
-return
-
-
-
 
 
 
 ; Ryuzanami instant reload test 1
+
+;reset (like reset CSS)
+HasVal1 := false
+HasVal2 := false
+HasVal3 := false
+HasVal4 := false
+HasVal5 := false
+
 ;first get vars
 ~WheelUp::
 WeaponNumber := 1
@@ -226,15 +256,11 @@ If (HasVal5) {
 }
 return
 
-
-
-
 ; now considering building as WeaponNumber to make it easier for me
 
 ; q WALL 6
 ; e STARIS 7
 ; LShift FLOOR 8
-
 
 ~q::
 WeaponNumber := 6
@@ -249,6 +275,18 @@ WeaponNumber := 8
 return
 
 
+
+
+;turbo-fy
+
+#If MakeTurboClick
+~LButton::
+While (GetKeyState("LButton", "P")) {
+    Send, {LButton}
+    sleep 45
+}
+MakeTurboClick := false
+#if
 
 
 
@@ -279,7 +317,7 @@ sleep 30
 ; Loop WeaponNumber times
 LoopTimes := %WeaponNumber%-1
 Loop %LoopTimes%                            ;The number is the amount of times the code is looped
-{ 
+{
     Send, {Right}
     sleep 30
 }
@@ -346,12 +384,3 @@ HasVal(haystack, needle) {
 
 
 ; The Weapon Numbers I'm already tracking from the macro above
-
-#If MakeTurboClick
-~LButton::
-While (GetKeyState("LButton", "P")) {
-    Send, {LButton}
-    sleep 45
-}
-MakeTurboClick := false
-#if
