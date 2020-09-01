@@ -16,8 +16,8 @@ Send {'}
 sleep 100 ; considering this the difference between tap and hold (200ms used globally but I'm fast boii)
 ; FIXME: When editing fast, if the sceond instance key is pressed right after this delay then it'll perform the macro even if you dont want to
 If (GetKeyState("f", "P")) {
-    SetKeyDelay, 20
-    Send, {RButton}f{'}{RButton}
+    SetKeyDelay, 40
+    Send, {RButton}g{'}{RButton}
 }
 return
 
