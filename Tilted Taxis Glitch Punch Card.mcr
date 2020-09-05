@@ -32,4 +32,8 @@ DELAY : 7200 : 1 : 3500
 Keyboard : ShiftLeft : KeyUp
 Keyboard : W : KeyUp
 Keyboard : Escape : KeyPress
+DELAY : 250
+Mouse : 1657 : 1005 : Click : 0 : 0 : 0
+DELAY : 250
+Mouse : 1596 : 664 : Click : 0 : 0 : 0
 ENDIF

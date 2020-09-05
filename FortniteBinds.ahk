@@ -19,7 +19,7 @@
     ; edit
     EDIT_BIND := f
     SECOND_EDIT_BIND := g
-    RESET_EDIT := {'}
+    RESET_EDIT := "{'}"
 
     ; builds
     BUILD_WALL := q
@@ -81,7 +81,7 @@ sleep 22
 Send {'}
 ; considering this the difference 100ms (T0.1) between tap and hold (200ms used globally but I'm fast as f boii)
 KeyWait, f, T0.1
-If ErrorLevel
+If ErrorLevel {
     Send, {RButton}
     sleep 45
     Send, f
@@ -89,6 +89,7 @@ If ErrorLevel
     Send {'}
     sleep 25
     Send, {RButton}
+}
 return
 
 
@@ -156,25 +157,12 @@ F4::
 return
 
 
-;cancel all AFKs using 1 button
-F5::
-SerpentMode := false
-PickUpMode := false
-EmoteMode := false
-AutoFarmMode := false
-return
-
-
-
-
 ; disable afk-autos & settings outside of Fortnite
 DisableMacro() {
     SerpentMode := false
     PickUpMode := false
     EmoteMode := false
     AutoFarmMode := false
-    sleep 1452
-    Send, okay
 }
 
 
