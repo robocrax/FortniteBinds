@@ -83,11 +83,11 @@ Send {'}
 KeyWait, f, T0.1
 If ErrorLevel {
     Send, {RButton}
-    sleep 45
+    sleep 65
     Send, f
-    sleep 22
+    sleep 23
     Send {'}
-    sleep 25
+    sleep 65
     Send, {RButton}
 }
 return
