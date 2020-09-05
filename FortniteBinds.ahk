@@ -1,7 +1,73 @@
-﻿#NoEnv
+﻿; keymapping. HINT: use AHK List of keys for non-alphabet keys
+
+    ; cancel script (works outside of Fortnite)
+    SCRIPT_RELOAD := F5
+
+    ; afk stuff
+    AFK_SERPENTAU := F1
+    AFK_TURBO_AUTOPICKUP := F2
+    AFK_EMOTE := F3
+    AFK_BETA_PROJECT2 := F4
+
+    ; auto run not toggle
+    AUTO_SPRINT := `
+
+    ; double movement keys (30 deg to 60 deg)
+    MOVE_LEFT := Left
+    MOVE_RIGHT := Right
+
+    ; edit
+    EDIT_BIND := f
+    SECOND_EDIT_BIND := g
+    RESET_EDIT := {'}
+
+    ; builds
+    BUILD_WALL := q
+    BUILD_RAMP := e
+    BUILD_FLAT := LShift
+    BUILD_CONE := =
+
+    ; weapons
+    WEAPON_NUMBER_1 := WheelUp
+    WEAPON_NUMBER_2 := WheelDown
+    WEAPON_NUMBER_3 := 3
+    WEAPON_NUMBER_4 := C
+    WEAPON_NUMBER_5 := 2
+
+    ; turbo click on weapn
+    WEAPON_TURBO_MODE := F6
+
+    ; specials: ryuzanami quick drop/split weapon/item
+    ; warn: do not use arrow keys to select mats/utility or this will not work for the period of the match. resets every match
+    SP_SPLIT_WEAPON := LAlt
+
+    ; specials: clix pb&j counter ramp
+    SP_CLIX_PBJ := 6
+
+    ; specials: bugha reversed ramp endgame rotate (and more uses as well)
+    SP_REVERSE_RAMP := 7
+
+
+
+
+
+; script start
+
+; have to do this for some reasons
+#NoEnv
+#SingleInstance Force
+
+
+; disable Macro (outside the IfWinActive loop)
+~LWin::
+~F5::
+DisableMacro()
+return
+
+
+; now only within Forty
 SetTitleMatchMode, 1
 #IfWinActive Fortnite
-#SingleInstance Force
 
 
 ; 60deg instead of 30deg full sprint towards direction
@@ -29,7 +95,7 @@ return
 ; don't toggle autorun but infact auto RUN!
 `::
 Send {w down}
-sleep 100
+sleep 300
 Send {w up}{MButton}
 return
 
@@ -89,8 +155,8 @@ F4::
 }
 return
 
+
 ;cancel all AFKs using 1 button
-~LWin::
 F5::
 SerpentMode := false
 PickUpMode := false
@@ -101,6 +167,15 @@ return
 
 
 
+; disable afk-autos & settings outside of Fortnite
+DisableMacro() {
+    SerpentMode := false
+    PickUpMode := false
+    EmoteMode := false
+    AutoFarmMode := false
+    sleep 1452
+    Send, okay
+}
 
 
 
@@ -158,7 +233,7 @@ return
 
 
 
-; new cone function
+; custom cone function
 
 XButton2::
 Send, =
