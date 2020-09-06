@@ -1,4 +1,13 @@
-﻿; keymapping. HINT: use AHK List of keys for non-alphabet keys
+﻿; You can change this part
+
+    ; delay between edits
+    PING = 22
+    BUILD_PULLOUT = %PING%*2
+    WEAPON_PULLOUT = %PING%*2
+
+    ; Keymapping
+    ; HINT: use AHK List of keys for non-alphabet keys
+    ; Set to false if you do not want it to be assigned
 
     ; cancel script (works outside of Fortnite)
     SCRIPT_RELOAD := F5
@@ -19,7 +28,7 @@
     ; edit
     EDIT_BIND := f
     SECOND_EDIT_BIND := g
-    RESET_EDIT := "{'}"
+    RESET_EDIT := "'"
 
     ; builds
     BUILD_WALL := q
@@ -53,16 +62,16 @@
 
 ; script start
 
-; have to do this for some reasons
-#NoEnv
-#SingleInstance Force
+    ; have to do this for some reasons
+    #NoEnv
+    #SingleInstance Force
 
 
-; disable Macro (outside the IfWinActive loop)
-~LWin::
-~F5::
-DisableMacro()
-return
+    ; disable Macro (outside the IfWinActive loop)
+    ~LWin::
+    ~F5::
+    DisableMacro()
+    return
 
 
 ; now only within Forty
@@ -157,6 +166,7 @@ F4::
 return
 
 
+; Functions
 ; disable afk-autos & settings outside of Fortnite
 DisableMacro() {
     SerpentMode := false
