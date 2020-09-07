@@ -1,4 +1,11 @@
-﻿; You can change this part
+﻿; have to do this for some reasons
+#NoEnv
+#SingleInstance Force
+Hotkey, ~LWin, DISABLE_AFK_MACROS
+SetTitleMatchMode, 1
+#IfWinActive Fortnite
+
+; Change this part
 
     ; delay between edits
     PING = 22
@@ -7,81 +14,79 @@
 
     ; Keymapping
     ; HINT: use AHK List of keys for non-alphabet keys
-    ; Set to false if you do not want it to be assigned
+    ;       dont cover in curly braces, script does that
 
     ; cancel script (works outside of Fortnite)
-    SCRIPT_RELOAD := F5
+    Hotkey, F5, SCRIPT_RELOAD
 
-    ; afk stuff
-    AFK_SERPENTAU := F1
-    AFK_TURBO_AUTOPICKUP := F2
-    AFK_EMOTE := F3
-    AFK_BETA_PROJECT2 := F4
+    ; ; afk stuff
+    ; Hotkey, F1, AFK_SERPENTAU
+    ; Hotkey, F2, AFK_TURBO_AUTOPICKUP
+    INVENTORY_PICKUP_BIND := "v"
+    ; Hotkey, F3, AFK_EMOTE
+    LAST_EMOTE_BIND := "NumpadEnter"
+    ; Hotkey, F4, AFK_BETA_PROJECT2
 
-    ; auto run not toggle
-    AUTO_SPRINT := `
+    ; ; auto run not toggle
+    ; Hotkey, `, AUTO_SPRINT
 
     ; double movement keys (30 deg to 60 deg)
-    MOVE_LEFT := Left
-    MOVE_RIGHT := Right
+    ~a::Left
+    ~d::Right
 
-    ; edit
-    EDIT_BIND := f
-    SECOND_EDIT_BIND := g
-    RESET_EDIT := "'"
+    ; ; edit
+    ; Hotkey, f, EDIT_BIND
+    SECONDARY_EDIT_BIND := "g"
+    RESET_EDIT_BIND := "'"
+    EDIT_WITH := "RButton"
+    PLACE_BUILD := "LButton"
 
-    ; builds
-    BUILD_WALL := q
-    BUILD_RAMP := e
-    BUILD_FLAT := LShift
-    BUILD_CONE := =
+    ; ; builds
+    ; Hotkey, q, BUILD_WALL
+    ; Hotkey, e, BUILD_RAMP
+    ; Hotkey, LShift, BUILD_FLAT
+    ; Hotkey, =, BUILD_CONE
 
-    ; weapons
-    WEAPON_NUMBER_1 := WheelUp
-    WEAPON_NUMBER_2 := WheelDown
-    WEAPON_NUMBER_3 := 3
-    WEAPON_NUMBER_4 := C
-    WEAPON_NUMBER_5 := 2
+    ; ; weapons
+    ; Hotkey, WheelUp, WEAPON_NUMBER_1
+    ; Hotkey, WheelDown, WEAPON_NUMBER_2
+    ; Hotkey, 3, WEAPON_NUMBER_3
+    ; Hotkey, C, WEAPON_NUMBER_4
+    ; Hotkey, 2, WEAPON_NUMBER_5
 
-    ; turbo click on weapn
-    WEAPON_TURBO_MODE := F6
+    ; ; turbo click on weapn
+    ; Hotkey, F6, WEAPON_TURBO_MODE
 
-    ; specials: ryuzanami quick drop/split weapon/item
-    ; warn: do not use arrow keys to select mats/utility or this will not work for the period of the match. resets every match
-    SP_SPLIT_WEAPON := LAlt
+    ; ; specials: ryuzanami quick drop/split weapon/item
+    ; ; warn: do not use arrow keys to select mats/utility or this will not work for the period of the match. resets every match
+    ; Hotkey, LAlt, SP_SPLIT_WEAPON
 
-    ; specials: clix pb&j counter ramp
-    SP_CLIX_PBJ := 6
+    ; ; specials: clix pb&j counter ramp
+    ; Hotkey, 6, SP_CLIX_PBJ
 
-    ; specials: bugha reversed ramp endgame rotate (and more uses as well)
-    SP_REVERSE_RAMP := 7
-
-
-
-
-
-; script start
-
-    ; have to do this for some reasons
-    #NoEnv
-    #SingleInstance Force
+    ; ; specials: bugha reversed ramp endgame rotate (and more uses as well)
+    ; Hotkey, 7, SP_REVERSE_RAMP
 
 
-    ; disable Macro (outside the IfWinActive loop)
-    ~LWin::
-    ~F5::
-    DisableMacro()
-    return
 
 
-; now only within Forty
-SetTitleMatchMode, 1
-#IfWinActive Fortnite
+
+; functions start
 
 
-; 60deg instead of 30deg full sprint towards direction
-~a::Left
-~d::Right
+
+
+DISABLE_AFK_MACROS:
+    SerpentMode := false
+    PickUpMode := false
+    EmoteMode := false
+    AutoFarmMode := false
+return
+
+SCRIPT_RELOAD:
+    Reload
+return
+
 
 
 ; reset every edit when pressing edit
@@ -165,15 +170,6 @@ F4::
 }
 return
 
-
-; Functions
-; disable afk-autos & settings outside of Fortnite
-DisableMacro() {
-    SerpentMode := false
-    PickUpMode := false
-    EmoteMode := false
-    AutoFarmMode := false
-}
 
 
 
