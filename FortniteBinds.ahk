@@ -1,11 +1,15 @@
 ﻿; have to do this for some reasons
 #NoEnv
 #SingleInstance Force
+
+; this hotkey works outside Fortnite (failsafe)
 Hotkey, ~LWin, DISABLE_AFK_MACROS
+; assuming Lwin is not spammed that hard (usually not) or else unneccesary runs
+
 SetTitleMatchMode, 1
 #IfWinActive Fortnite
 
-; Change this part
+; Changeable part
 
     ; delay between edits
     PING = 22
