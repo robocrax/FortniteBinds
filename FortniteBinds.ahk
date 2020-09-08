@@ -6,15 +6,12 @@
 ; assuming Lwin is not spammed that hard (usually not) or else unneccesary runs
 Hotkey, ~LWin, DISABLE_AFK_MACROS
 
-SetTitleMatchMode, 1
-#IfWinActive Fortnite
-
 ; Changeable part
 
     ; delay between edits
     PING = 22     ; do not even think of values below 5. definitely not zero
     BUILD_PULLOUT = %PING%*2
-    WEAPON_PULLOUT = %PING%*2
+    ; WEAPON_PULLOUT = %PING%*2    #Unused
 
     ; Keymapping
     ; HINT: use AHK List of keys for non-alphabet keys
@@ -34,8 +31,7 @@ SetTitleMatchMode, 1
     ; Hotkey, `, AUTO_SPRINT
 
     ; Double movement keys (30 deg to 60 deg)
-    ~a::Left
-    ~d::Right
+    ; Disabled. gicing problems. will move it to last
 
     ; Edit
     Hotkey, ~f, EDIT_BIND
@@ -45,8 +41,8 @@ SetTitleMatchMode, 1
     PRIMARY_EDIT_BIND := "f"
     SECONDARY_EDIT_BIND := "g"
 
-    HOLD_TO_DOUBLE_EDIT_RAMP_WALL = false
-    HOLD_DELAY = 0.15 ; which translates to 150ms
+    HOLD_TO_DOUBLE_EDIT_RAMP_WALL = true
+    HOLD_DELAY = T0.65 ; which translates to 150ms
 
     ; ; Builds
     ; Hotkey, q, BUILD_WALL
@@ -75,6 +71,7 @@ SetTitleMatchMode, 1
     ; Hotkey, 7, SP_REVERSE_RAMP
 
 
+    ; double movement here test
 
 
 
@@ -87,45 +84,53 @@ SetTitleMatchMode, 1
 
 
 
+; erase A work with B.. too many issues
 
-; Functions start
+#NoEnv
+#SingleInstance Force
 
-DISABLE_AFK_MACROS:
+~LWin::
     SerpentMode := false
     PickUpMode := false
     EmoteMode := false
     AutoFarmMode := false
 return
 
-SCRIPT_RELOAD:
+;SetTitleMatchMode, 1
+;#IfWinActive Fortnite
+
+F5::
     Reload
 return
 
 
 
-; reset every edit when pressing edit
-EDIT_BIND:
-sleep %PING%
-Send {%RESET_EDIT_BIND%}
-if (%HOLD_TO_DOUBLE_EDIT_RAMP_WALL%) {
-    KeyWait, f, T%HOLD_DELAY%
-    If ErrorLevel {
-        Send, {%EDIT_WITH%}
-        sleep %PING%*3
-        Send, %PRIMARY_EDIT_BIND%
-        sleep %PING%+1
-        Send {%RESET_EDIT_BIND%}
-        sleep %PING%*3
-        Send, {%EDIT_WITH%}
+~f::
+    ; reset every edit when pressing edit
+    Sleep, PING
+    Send, {%RESET_EDIT_BIND%}
+
+    ; double edit afterward
+    if (%HOLD_TO_DOUBLE_EDIT_RAMP_WALL%) {
+        KeyWait, %A_ThisHotkey%, T5
+        If ErrorLevel {
+            Send, {%EDIT_WITH%}
+            Sleep, PING*3
+            Send, dreamonme
+            Send, %PRIMARY_EDIT_BIND%
+            Sleep, PING+1
+            Send {%RESET_EDIT_BIND%}
+            Sleep, PING*3
+            Send, {%EDIT_WITH%}
+        }
     }
-}
 return
 
 
 ; don't toggle autorun but infact auto RUN!
 `::
 Send {w down}
-sleep 300
+Sleep, 300
 Send {w up}{MButton}
 return
 
@@ -139,9 +144,9 @@ F1::
    While, SerpentMode
     {
         Send g
-        sleep 65
+        Sleep, 65
         Send {RButton}
-        sleep 65
+        Sleep, 65
     }
 }
 return
@@ -154,7 +159,7 @@ F2::
    While, PickUpMode
     {
         Send v
-        sleep 35
+        Sleep, 35
     }
 }
 return
@@ -167,7 +172,7 @@ F3::
    While, EmoteMode
     {
         Send {NumpadEnter}
-        sleep 3035
+        Sleep, 3035
     }
 }
 return
@@ -180,7 +185,7 @@ F4::
    While, AutoFarmMode
     {
         Send b4
-        sleep 3035
+        Sleep, 3035
     }
 }
 return
@@ -203,7 +208,7 @@ return
 7::
 SetKeyDelay, 10
 Send, e
-sleep 40
+Sleep, 40
 Send, ey8
 SendEvent, {LButton down}
 KeyWait, 7
@@ -218,7 +223,7 @@ return
 6::
 SetKeyDelay, 10
 Send, e
-sleep 40
+Sleep, 40
 Send, ey
 SendEvent, {LButton down}
 KeyWait, 6
@@ -271,7 +276,7 @@ return
 ~q up::
 ~e up::
 ~LShift up::
-sleep 10
+Sleep, 10
 Send, =
 return
 
@@ -362,7 +367,7 @@ return
 ~LButton::
 While (GetKeyState("LButton", "P")) {
     Send, {LButton}
-    sleep 45
+    Sleep, 45
 }
 MakeTurboClick := false
 #if
@@ -392,16 +397,16 @@ MakeTurboClick := false
 
 4::
 Send, i
-sleep 30
+Sleep, 30
 ; Loop WeaponNumber times
 LoopTimes := %WeaponNumber%-1
 Loop %LoopTimes%                            ;The number is the amount of times the code is looped
 {
     Send, {Right}
-    sleep 30
+    Sleep, 30
 }
 Send, z
-sleep 20
+Sleep, 20
 Send, i
 If (GetKeyState("w", "P")) {
     SendEvent, {w down}
