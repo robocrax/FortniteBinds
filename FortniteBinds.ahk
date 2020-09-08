@@ -3,8 +3,8 @@
 #SingleInstance Force
 
 ; this hotkey works outside Fortnite (failsafe)
-Hotkey, ~LWin, DISABLE_AFK_MACROS
 ; assuming Lwin is not spammed that hard (usually not) or else unneccesary runs
+Hotkey, ~LWin, DISABLE_AFK_MACROS
 
 SetTitleMatchMode, 1
 #IfWinActive Fortnite
@@ -12,7 +12,7 @@ SetTitleMatchMode, 1
 ; Changeable part
 
     ; delay between edits
-    PING = 22
+    PING = 22     ; do not even think of values below 5. definitely not zero
     BUILD_PULLOUT = %PING%*2
     WEAPON_PULLOUT = %PING%*2
 
@@ -20,65 +20,75 @@ SetTitleMatchMode, 1
     ; HINT: use AHK List of keys for non-alphabet keys
     ;       dont cover in curly braces, script does that
 
-    ; cancel script (works outside of Fortnite)
     Hotkey, F5, SCRIPT_RELOAD
 
-    ; ; afk stuff
-    ; Hotkey, F1, AFK_SERPENTAU
+    ; ; AFK stuff
+    ; Hotkey, F1, AFK_SERPENTAU   ; define keys below in Edit section
     ; Hotkey, F2, AFK_TURBO_AUTOPICKUP
     INVENTORY_PICKUP_BIND := "v"
     ; Hotkey, F3, AFK_EMOTE
     LAST_EMOTE_BIND := "NumpadEnter"
     ; Hotkey, F4, AFK_BETA_PROJECT2
 
-    ; ; auto run not toggle
+    ; ; Auto run not toggle
     ; Hotkey, `, AUTO_SPRINT
 
-    ; double movement keys (30 deg to 60 deg)
+    ; Double movement keys (30 deg to 60 deg)
     ~a::Left
     ~d::Right
 
-    ; ; edit
-    ; Hotkey, f, EDIT_BIND
-    SECONDARY_EDIT_BIND := "g"
+    ; Edit
+    Hotkey, ~f, EDIT_BIND
     RESET_EDIT_BIND := "'"
     EDIT_WITH := "RButton"
     PLACE_BUILD := "LButton"
+    PRIMARY_EDIT_BIND := "f"
+    SECONDARY_EDIT_BIND := "g"
 
-    ; ; builds
+    HOLD_TO_DOUBLE_EDIT_RAMP_WALL = false
+    HOLD_DELAY = 0.15 ; which translates to 150ms
+
+    ; ; Builds
     ; Hotkey, q, BUILD_WALL
     ; Hotkey, e, BUILD_RAMP
     ; Hotkey, LShift, BUILD_FLAT
     ; Hotkey, =, BUILD_CONE
 
-    ; ; weapons
+    ; ; Weapons
     ; Hotkey, WheelUp, WEAPON_NUMBER_1
     ; Hotkey, WheelDown, WEAPON_NUMBER_2
     ; Hotkey, 3, WEAPON_NUMBER_3
     ; Hotkey, C, WEAPON_NUMBER_4
     ; Hotkey, 2, WEAPON_NUMBER_5
 
-    ; ; turbo click on weapn
+    ; ; Turbo click on weapn
     ; Hotkey, F6, WEAPON_TURBO_MODE
 
-    ; ; specials: ryuzanami quick drop/split weapon/item
+    ; ; Specials: ryuzanami quick drop/split weapon/item
     ; ; warn: do not use arrow keys to select mats/utility or this will not work for the period of the match. resets every match
     ; Hotkey, LAlt, SP_SPLIT_WEAPON
 
-    ; ; specials: clix pb&j counter ramp
+    ; ; Specials: clix pb&j counter ramp
     ; Hotkey, 6, SP_CLIX_PBJ
 
-    ; ; specials: bugha reversed ramp endgame rotate (and more uses as well)
+    ; ; Specials: bugha reversed ramp endgame rotate (and more uses as well)
     ; Hotkey, 7, SP_REVERSE_RAMP
 
 
 
 
 
-; functions start
 
 
 
+
+
+
+
+
+
+
+; Functions start
 
 DISABLE_AFK_MACROS:
     SerpentMode := false
@@ -94,19 +104,20 @@ return
 
 
 ; reset every edit when pressing edit
-~f::
-sleep 22
-Send {'}
-; considering this the difference 100ms (T0.1) between tap and hold (200ms used globally but I'm fast as f boii)
-KeyWait, f, T0.1
-If ErrorLevel {
-    Send, {RButton}
-    sleep 65
-    Send, f
-    sleep 23
-    Send {'}
-    sleep 65
-    Send, {RButton}
+EDIT_BIND:
+sleep %PING%
+Send {%RESET_EDIT_BIND%}
+if (%HOLD_TO_DOUBLE_EDIT_RAMP_WALL%) {
+    KeyWait, f, T%HOLD_DELAY%
+    If ErrorLevel {
+        Send, {%EDIT_WITH%}
+        sleep %PING%*3
+        Send, %PRIMARY_EDIT_BIND%
+        sleep %PING%+1
+        Send {%RESET_EDIT_BIND%}
+        sleep %PING%*3
+        Send, {%EDIT_WITH%}
+    }
 }
 return
 
