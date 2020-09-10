@@ -1,93 +1,9 @@
-﻿; have to do this for some reasons
-#NoEnv
+﻿#NoEnv
 #SingleInstance Force
 
-; this hotkey works outside Fortnite (failsafe)
-; assuming Lwin is not spammed that hard (usually not) or else unneccesary runs
-Hotkey, ~LWin, DISABLE_AFK_MACROS
-
-; Changeable part
-
-    ; delay between edits
-    PING = 22     ; do not even think of values below 5. definitely not zero
-    BUILD_PULLOUT = %PING%*2
-    ; WEAPON_PULLOUT = %PING%*2    #Unused
-
-    ; Keymapping
-    ; HINT: use AHK List of keys for non-alphabet keys
-    ;       dont cover in curly braces, script does that
-
-    Hotkey, F5, SCRIPT_RELOAD
-
-    ; ; AFK stuff
-    ; Hotkey, F1, AFK_SERPENTAU   ; define keys below in Edit section
-    ; Hotkey, F2, AFK_TURBO_AUTOPICKUP
-    INVENTORY_PICKUP_BIND := "v"
-    ; Hotkey, F3, AFK_EMOTE
-    LAST_EMOTE_BIND := "NumpadEnter"
-    ; Hotkey, F4, AFK_BETA_PROJECT2
-
-    ; ; Auto run not toggle
-    ; Hotkey, `, AUTO_SPRINT
-
-    ; Double movement keys (30 deg to 60 deg)
-    ; Disabled. gicing problems. will move it to last
-
-    ; Edit
-    Hotkey, ~f, EDIT_BIND
-    RESET_EDIT_BIND := "'"
-    EDIT_WITH := "RButton"
-    PLACE_BUILD := "LButton"
-    PRIMARY_EDIT_BIND := "f"
-    SECONDARY_EDIT_BIND := "g"
-
-    HOLD_TO_DOUBLE_EDIT_RAMP_WALL = true
-    HOLD_DELAY = T0.65 ; which translates to 150ms
-
-    ; ; Builds
-    ; Hotkey, q, BUILD_WALL
-    ; Hotkey, e, BUILD_RAMP
-    ; Hotkey, LShift, BUILD_FLAT
-    ; Hotkey, =, BUILD_CONE
-
-    ; ; Weapons
-    ; Hotkey, WheelUp, WEAPON_NUMBER_1
-    ; Hotkey, WheelDown, WEAPON_NUMBER_2
-    ; Hotkey, 3, WEAPON_NUMBER_3
-    ; Hotkey, C, WEAPON_NUMBER_4
-    ; Hotkey, 2, WEAPON_NUMBER_5
-
-    ; ; Turbo click on weapn
-    ; Hotkey, F6, WEAPON_TURBO_MODE
-
-    ; ; Specials: ryuzanami quick drop/split weapon/item
-    ; ; warn: do not use arrow keys to select mats/utility or this will not work for the period of the match. resets every match
-    ; Hotkey, LAlt, SP_SPLIT_WEAPON
-
-    ; ; Specials: clix pb&j counter ramp
-    ; Hotkey, 6, SP_CLIX_PBJ
-
-    ; ; Specials: bugha reversed ramp endgame rotate (and more uses as well)
-    ; Hotkey, 7, SP_REVERSE_RAMP
-
-
-    ; double movement here test
-
-
-
-
-
-
-
-
-
-
-
-
-; erase A work with B.. too many issues
-
-#NoEnv
-#SingleInstance Force
+; delay between edits
+PING = 22     ; do not even think of values below 5. definitely not zero. best emotes in [=> OCE <=]
+BUILD_PULLOUT = %PING%*2
 
 ~LWin::
     SerpentMode := false
@@ -96,43 +12,56 @@ Hotkey, ~LWin, DISABLE_AFK_MACROS
     AutoFarmMode := false
 return
 
-;SetTitleMatchMode, 1
-;#IfWinActive Fortnite
+SetTitleMatchMode, 1
+#IfWinActive Fortnite
 
 F5::
     Reload
 return
 
+; Double movement binds
+~a::Left
+~d::Right
 
 
 ~f::
     ; reset every edit when pressing edit
     Sleep, PING
-    Send, {%RESET_EDIT_BIND%}
+    Send, {'}
 
     ; double edit afterward
-    if (%HOLD_TO_DOUBLE_EDIT_RAMP_WALL%) {
-        KeyWait, %A_ThisHotkey%, T5
-        If ErrorLevel {
-            Send, {%EDIT_WITH%}
-            Sleep, PING*3
-            Send, dreamonme
-            Send, %PRIMARY_EDIT_BIND%
-            Sleep, PING+1
-            Send {%RESET_EDIT_BIND%}
-            Sleep, PING*3
-            Send, {%EDIT_WITH%}
-        }
+    KeyWait, f, T0.12     ; 120 ms tried and tested
+    If ErrorLevel {
+        Send, {RButton}
+        Sleep, PING*3
+        Send, f
+        Sleep, PING+1
+        Send {'}
+        Sleep, PING*3
+        Send, {RButton}
     }
 return
 
 
 ; don't toggle autorun but infact auto RUN!
 `::
+AutoRunningInit := true
 Send {w down}
-Sleep, 300
-Send {w up}{MButton}
+Sleep, 200
+Send, a
+Send {MButton}
+If (!GetKeyState("w", "P")) {
+    Send {w up}
+}
+AutoRunningInit := false
 return
+
+
+#If AutoRunningInit
+    w up::return
+#if
+
+
 
 
 ; AFK macros
