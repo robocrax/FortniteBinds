@@ -11,8 +11,11 @@ BUILD_PULLOUT = %PING%*2
     AutoFarmMode := false
 return
 
-SetTitleMatchMode, 1
-#IfWinActive ahk_class Fortnite
+SetTitleMatchMode, 2
+#IfWinActive Fortnite
+; This one is being stopped midway in this script but I dont know where its being terminated. adding more for fail safe
+#IfWinActive Fortnite
+#IfWinActive Fortnite
 
 F5::
     Reload
