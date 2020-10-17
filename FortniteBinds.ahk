@@ -233,37 +233,37 @@ return
 ; HasVal4 := false
 ; HasVal5 := false
 
-; ;first get vars
-; ~WheelUp::
-; WeaponNumber := 1
+;first get vars
+~WheelUp::
+WeaponNumber := 1
 ; If (HasVal1) {
 ;     MakeTurboClick := true
 ; }
-; return
-; ~WheelDown::
-; WeaponNumber := 2
+return
+~WheelDown::
+WeaponNumber := 2
 ; If (HasVal2) {
 ;     MakeTurboClick := true
 ; }
-; return
-; ~3::
-; WeaponNumber := 3
+return
+~3::
+WeaponNumber := 3
 ; If (HasVal3) {
 ;     MakeTurboClick := true
 ; }
-; return
-; ~c::
-; WeaponNumber := 4
+return
+~c::
+WeaponNumber := 4
 ; If (HasVal4) {
 ;     MakeTurboClick := true
 ; }
-; return
-; ~2::
-; WeaponNumber := 5
+return
+~2::
+WeaponNumber := 5
 ; If (HasVal5) {
 ;     MakeTurboClick := true
 ; }
-; return
+return
 
 ; ; now considering building as WeaponNumber to make it easier for me
 
