@@ -1,4 +1,4 @@
-﻿#SingleInstance Force
+#SingleInstance Force
 
 ; delay between edits
 PING = 22     ; do not even think of values below 5. definitely not zero. best emotes in [=> OCE <=]
@@ -21,9 +21,12 @@ F5::
     Reload
 return
 
-; Double movement binds
-~a::Left
-~d::Right
+
+
+CapsLock::NumpadEnter
+
+AppsKey::CapsLock
+
 
 
 ~f::
@@ -161,7 +164,14 @@ return
 
 
 
-
+XButton1::
+While, GetKeyState("XButton1", "P")
+    {
+	Send, g
+sleep 15
+Send, {'}g
+}
+return
 
 
 
